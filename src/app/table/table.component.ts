@@ -46,18 +46,22 @@ export class TableComponent implements AfterViewInit {
   constructor(private launchService: LaunchService) {}
 
   ngAfterViewInit() {
+    this.sort?.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     this.getLaunches();
   }
 
   getLaunches(): void {
-    this.isLoadingResults = true;
-    this.launchService
-      .getLaunches(
-        this.sort.active,
-        this.sort.direction,
-        this.paginator.pageIndex
-      )
+    merge(this.sort?.sortChange, this.paginator?.page)
       .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.launchService.getLaunches(
+            this.sort.active,
+            this.sort.direction,
+            this.paginator.pageIndex
+          );
+        }),
         map((data) => {
           this.isLoadingResults = false;
 
