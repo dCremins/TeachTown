@@ -11,6 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableComponent } from './table.component';
 import { LaunchService } from '../launch/launch.service';
 import { of } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('TableComponent', () => {
   let component: TableComponent;
@@ -35,6 +37,8 @@ describe('TableComponent', () => {
         MatPaginatorModule,
         MatSortModule,
         MatTooltipModule,
+        MatIconModule,
+        MatButtonModule,
       ],
     }).compileComponents();
 
@@ -43,6 +47,7 @@ describe('TableComponent', () => {
     mockLaunchService = TestBed.inject(
       LaunchService
     ) as jasmine.SpyObj<LaunchService>;
+    fixture.detectChanges();
   });
 
   describe('ngAfterViewInit', () => {
@@ -64,16 +69,16 @@ describe('TableComponent', () => {
     });
   });
 
-  describe('openPressKit', () => {
-    it('should open the press kit if there is one', () => {
+  describe('openLink', () => {
+    it('should open the link if there is one', () => {
       const spy = spyOn(window, 'open');
-      component.openPressKit({ links: { presskit: 'someLink' } } as any);
+      component.openLink('someLink');
       expect(spy).toHaveBeenCalledWith('someLink', '_blank');
     });
 
-    it('should do nothing if there is no presskit link', () => {
+    it('should do nothing if there is no link', () => {
       const spy = spyOn(window, 'open');
-      component.openPressKit({ links: { presskit: null } } as any);
+      component.openLink(undefined);
       expect(spy).not.toHaveBeenCalled();
     });
   });

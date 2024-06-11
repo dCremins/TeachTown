@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TableComponent } from './table/table.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent, TableComponent],
@@ -30,6 +32,8 @@ import { TableComponent } from './table/table.component';
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   providers: [provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent],

@@ -51,20 +51,78 @@
     <mat-cell *matCellDef="let element"> {{ element.details }} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="links">
+    <mat-header-cell data-cy="header-links" *matHeaderCellDef>
+      Links
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngIf="!element.links">No Links</div>
+      <div *ngIf="element.links" class="links">
+        <button
+          *ngIf="element.links.reddit.campaign"
+          mat-icon-button
+          aria-label="Link for Reddit"
+          matTooltip="Link for Reddit"
+          (click)="openLink(element.links.reddit.campaign)"
+        >
+          <mat-icon fontIcon="people"></mat-icon>
+        </button>
+        <button
+          *ngIf="element.links.flickr.small && element.links.flickr.small[0]"
+          mat-icon-button
+          aria-label="Link for Flickr"
+          matTooltip="Link for Flickr"
+          (click)="openLink(element.links.flickr.small[0])"
+        >
+          <mat-icon fontIcon="photo_camera"></mat-icon>
+        </button>
+        <button
+          *ngIf="element.links.presskit"
+          mat-icon-button
+          aria-label="Link for Press Kit"
+          matTooltip="Link for Press Kit"
+          (click)="openLink(element.links.presskit)"
+        >
+          <mat-icon fontIcon="feed"></mat-icon>
+        </button>
+        <button
+          *ngIf="element.links.webcast"
+          mat-icon-button
+          aria-label="Link for WebCast"
+          matTooltip="Link for WebCast"
+          (click)="openLink(element.links.webcast)"
+        >
+          <mat-icon fontIcon="ondemand_video"></mat-icon>
+        </button>
+        <button
+          *ngIf="element.links.article"
+          mat-icon-button
+          aria-label="Link for News Article"
+          matTooltip="Link for News Article"
+          (click)="openLink(element.links.article)"
+        >
+          <mat-icon fontIcon="newspaper"></mat-icon>
+        </button>
+        <button
+          *ngIf="element.links.wikipedia"
+          mat-icon-button
+          aria-label="Link for Wikipedia"
+          matTooltip="Link for Wikipedia"
+          (click)="openLink(element.links.wikipedia)"
+        >
+          <mat-icon fontIcon="language"></mat-icon>
+        </button>
+      </div>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row
     *matHeaderRowDef="displayedColumns; sticky: true"
   ></mat-header-row>
   <mat-row
     matRipple
     attr.data-cy="row-{{ row.flight_number }}"
-    matTooltip="{{
-      !!row.links?.presskit ? 'Open Press Kit' : 'No Press Kit Available'
-    }}"
-    matTooltipPosition="above"
-    matTooltipClass="row-tooltip"
     *matRowDef="let row; columns: displayedColumns"
-    [ngClass]="{ linked: !!row.links?.presskit }"
-    (click)="openPressKit(row)"
   >
   </mat-row>
 </mat-table>

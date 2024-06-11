@@ -1,13 +1,16 @@
+$text: #3f4648;
+$grey: #4f5b67;
+
 .mat-mdc-table {
   background-color: #fff;
   box-sizing: border-box;
-  color: #3f4648;
+  color: $text;
   flex: 1;
 }
 
 ::ng-deep .mat-mdc-header-cell {
   .mat-sort-header-arrow {
-    color: #3f4648;
+    color: $text;
     opacity: 1;
   }
 }
@@ -32,28 +35,35 @@ mat-cell.mat-column-flight_number {
 
 .mat-mdc-cell {
   padding: 10px 10px 10px 0;
+
+  &.mat-column-links {
+    padding: 5px;
+  }
+}
+
+::ng-deep .mat-mdc-icon-button {
+  &:hover {
+    background-color: #c5ee93;
+  }
+
+  .mat-icon {
+    color: $grey;
+  }
 }
 
 // Visual indicator that launch has a presskit link
 .mat-mdc-row,
 .mat-mdc-header-row {
   background-color: #fbfbfb;
-  color: #3f4648;
+  color: $text;
 
   &:nth-child(odd) {
     background-color: #f2f2f2;
-  }
-  &:hover {
-    background-color: #c5ee93;
   }
 }
 
 .linked:hover {
   cursor: pointer;
-}
-
-.row-tooltip {
-  background-color: #9c27b0;
 }
 
 .mat-mdc-paginator {
@@ -70,9 +80,3 @@ mat-cell.mat-column-flight_number {
     }
   }
 }
-
-// @media (min-width: 600px) {
-//   .mat-mdc-header-cell {
-//     margin-left: 5px;
-//   }
-// }

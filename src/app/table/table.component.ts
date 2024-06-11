@@ -23,31 +23,27 @@ export class TableComponent implements AfterViewInit {
     'date_local',
     'name',
     'details',
+    'links',
   ];
   public launches: MatTableDataSource<Launch> = new MatTableDataSource();
 
   public resultsLength = 0;
   public isLoadingResults = true;
-  private paginator: MatPaginator = new MatPaginator(
+
+  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(
     new MatPaginatorIntl(),
     ChangeDetectorRef.prototype
   );
-  private sort: MatSort = new MatSort();
 
-  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    this.paginator = paginator;
-    this.launches.paginator = paginator;
-  }
-  @ViewChild(MatSort) set matSort(sort: MatSort) {
-    this.sort = sort;
-    this.launches.sort = sort;
-  }
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(private launchService: LaunchService) {}
 
   ngAfterViewInit() {
     this.sort?.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     this.getLaunches();
+    this.launches.sort = this.sort;
+    this.launches.paginator = this.paginator;
   }
 
   getLaunches(): void {
@@ -77,12 +73,9 @@ export class TableComponent implements AfterViewInit {
       );
   }
 
-  openPressKit(launch: Launch) {
-    // Not all launches have presskit links
-    // SpaceX Hosted Press Kit Links currently redirect to the main website
-    // https://github.com/r-spacex/SpaceX-API/issues/810
-    if (launch.links && launch.links.presskit) {
-      window.open(launch.links.presskit, '_blank');
+  openLink(link?: string) {
+    if (link) {
+      window.open(link, '_blank');
     }
   }
 }
